@@ -15,13 +15,24 @@ class MovieListing extends StatelessWidget {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: Container(child: Column(
-        children: [Text('Dracula')],
-      )),
+      body: Container(
+          color: cinemaBackground,
+          child: Column(
+            children: [
+              Text(
+                'Dracula',
+                style: TextStyle(fontSize: 50),
+              ),
+              Text(
+                '1931',
+                style:
+                    TextStyle(backgroundColor: Color.fromARGB(0, 133, 45, 45)),
+              )
+            ],
+          )),
     );
   }
 }
-
 
 // DropdownMenu<int>(
 //   initialSelection: 5,
