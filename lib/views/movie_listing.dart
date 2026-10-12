@@ -16,24 +16,31 @@ class MovieListing extends StatelessWidget {
       ),
       drawer: const NavDrawer(),
       body: Container(
+          padding: EdgeInsets.all(10),
           color: cinemaBackground,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Dracula',
+                'Dracula (1931)',
                 style: TextStyle(fontSize: 25),
               ),
               Text(
                 '1931',
                 style:
                     TextStyle(backgroundColor: Color.fromARGB(0, 133, 45, 45)),
-              )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ElevatedButton(onPressed: () {}, child: Text('Book Now'))
             ],
           )),
     );
   }
 }
 
+// name () {}
 // DropdownMenu<int>(
 //   initialSelection: 5,
 //   onSelected: (int? value) {
