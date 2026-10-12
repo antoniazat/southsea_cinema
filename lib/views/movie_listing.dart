@@ -21,7 +21,7 @@ class MovieListing extends StatelessWidget {
             children: [
               Text(
                 'Dracula',
-                style: TextStyle(fontSize: 50),
+                style: TextStyle(fontSize: 25),
               ),
               Text(
                 '1931',
