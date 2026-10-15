@@ -22,39 +22,64 @@ class MovieListing extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Dracula (1931)',
+                'Dracula (1931) (PG)',
                 style: TextStyle(fontSize: 25),
               ),
-              Text(
-                '1931',
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                'Southsea Cinema Room',
                 style:
-                    TextStyle(backgroundColor: Color.fromARGB(0, 133, 45, 45)),
+                    TextStyle(fontSize: 15),
               ),
-              SizedBox(
-                height: 10,
               ),
-              ElevatedButton(onPressed: () {}, child: Text('Book Now'))
+              SizedBox(height: 10),
+              BookingWidget(),
             ],
           )),
     );
   }
 }
 
-// name () {}
-// DropdownMenu<int>(
-//   initialSelection: 5,
-//   onSelected: (int? value) {
-//     if (value != null) {
-//       setState(() {
-//         _totalPrice = value;
-//       });
-//     }
-//   },
-//   dropdownMenuEntries: [
-//     DropDownMenuEntry(value: 1, label: '1 Person'),
-//     DropDownMenuEntry(value: 2, label: '2 People'),
-//     DropDownMenuEntry(value: 3, label: '3 People'),
-//     DropDownMenuEntry(value: 4, label: '4 People'),
-//     DropDownMenuEntry(value: 5, label: '5 People'),
-//   ],
-// ),
+class BookingWidget extends StatefulWidget {
+  const BookingWidget({super.key});
+
+  @override
+  State<BookingWidget> createState() => _BookingWidgetState();
+}
+
+class _BookingWidgetState extends State<BookingWidget> {
+  int _ticketQuantity = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        DropdownButton<int>(
+          value: _ticketQuantity,
+          items: const [
+            DropdownMenuItem(value: 1, child: Text('1 Person')),
+            DropdownMenuItem(value: 2, child: Text('2 People')),
+            DropdownMenuItem(value: 3, child: Text('3 People')),
+            DropdownMenuItem(value: 4, child: Text('4 People')),
+            DropdownMenuItem(value: 5, child: Text('5 People')),
+          ],
+          onChanged: (value) {
+            if (value != null) {
+              setState(() {
+                _ticketQuantity = value;
+              });
+            }
+          },
+        ),
+        const SizedBox(height: 10),
+        ElevatedButton(onPressed: () {
+          // booking logic can go here later
+        }, 
+        child: const Text('Book Now')
+        ),
+      ],
+    );
+  }
+}
