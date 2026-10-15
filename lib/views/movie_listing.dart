@@ -25,15 +25,24 @@ class MovieListing extends StatelessWidget {
                 'Dracula (1931) (PG)',
                 style: TextStyle(fontSize: 25),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: const Text(
+              const SizedBox(height: 20),
+              
+              Text(
                 'Southsea Cinema Room',
+                 style: TextStyle(fontSize: 15)
+                 ),
+              const SizedBox(height: 20),
+
+              Text(
+                'Thursday 22 October 2026, 18:00 - ends at 19:15',
+                style: TextStyle(fontSize: 15)
+                ),
+              const SizedBox(height: 20),
+
+              Text('Please note that Discounts/Membership Benefits will be applied once you have your tickets',
                 style:
                     TextStyle(fontSize: 15),
               ),
-              ),
-              SizedBox(height: 10),
               BookingWidget(),
             ],
           )),
@@ -54,8 +63,12 @@ class _BookingWidgetState extends State<BookingWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('Tickets',
+        style: TextStyle(
+          fontWeight: FontWeight.w900, fontSize: 20)),
+        
         DropdownButton<int>(
           value: _ticketQuantity,
           items: const [
