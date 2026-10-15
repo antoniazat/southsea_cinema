@@ -37,12 +37,20 @@ class MovieListing extends StatelessWidget {
                 'Thursday 22 October 2026, 18:00 - ends at 19:15',
                 style: TextStyle(fontSize: 15)
                 ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
 
               Text('Please note that Discounts/Membership Benefits will be applied once you have your tickets',
                 style:
                     TextStyle(fontSize: 15),
               ),
+              const SizedBox(height: 20),
+              
+              Text(
+                'Select Quantities (Up to 5 People in total)',
+                style: TextStyle(fontSize: 15),
+                ),
+              const SizedBox(height: 40),
+
               BookingWidget(),
             ],
           )),
