@@ -77,7 +77,7 @@ class _BookingWidgetState extends State<BookingWidget> {
         ElevatedButton(onPressed: () {
           // booking logic can go here later
         }, 
-        child: const Text('Book Now')
+        child: const Text('Add to Order')
         ),
       ],
     );
