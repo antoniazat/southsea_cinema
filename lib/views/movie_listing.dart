@@ -26,31 +26,21 @@ class MovieListing extends StatelessWidget {
                 style: TextStyle(fontSize: 25),
               ),
               const SizedBox(height: 20),
-              
-              Text(
-                'Southsea Cinema Room',
-                 style: TextStyle(fontSize: 15)
-                 ),
+              Text('Southsea Cinema Room', style: TextStyle(fontSize: 15)),
               const SizedBox(height: 20),
-
-              Text(
-                'Thursday 22 October 2026, 18:00 - ends at 19:15',
-                style: TextStyle(fontSize: 15)
-                ),
+              Text('Thursday 22 October 2026, 18:00 - ends at 19:15',
+                  style: TextStyle(fontSize: 15)),
               const SizedBox(height: 50),
-
-              Text('Please note that Discounts/Membership Benefits will be applied once you have your tickets',
-                style:
-                    TextStyle(fontSize: 15),
+              Text(
+                'Please note that Discounts/Membership Benefits will be applied once you have your tickets',
+                style: TextStyle(fontSize: 15),
               ),
               const SizedBox(height: 20),
-              
               Text(
                 'Select Quantities (Up to 5 People in total)',
                 style: TextStyle(fontSize: 15),
-                ),
+              ),
               const SizedBox(height: 40),
-
               BookingWidget(),
             ],
           )),
@@ -67,6 +57,7 @@ class BookingWidget extends StatefulWidget {
 
 class _BookingWidgetState extends State<BookingWidget> {
   int _ticketQuantity = 1;
+  String _bookingMessage = '';
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +65,16 @@ class _BookingWidgetState extends State<BookingWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Tickets',
-        style: TextStyle(
-          fontWeight: FontWeight.w900, fontSize: 20)),
-        
+            style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
         DropdownButton<int>(
           value: _ticketQuantity,
+          onChanged: (int? value) {
+            if (value != null) {
+              setState(() {
+                _ticketQuantity = value;
+              });
+            }
+          },
           items: const [
             DropdownMenuItem(value: 1, child: Text('1 Person')),
             DropdownMenuItem(value: 2, child: Text('2 People')),
@@ -86,20 +82,16 @@ class _BookingWidgetState extends State<BookingWidget> {
             DropdownMenuItem(value: 4, child: Text('4 People')),
             DropdownMenuItem(value: 5, child: Text('5 People')),
           ],
-          onChanged: (value) {
-            if (value != null) {
-              setState(() {
-                _ticketQuantity = value;
-              });
-            }
-          },
         ),
+        Text(_bookingMessage),
         const SizedBox(height: 10),
-        ElevatedButton(onPressed: () {
-          // booking logic can go here later
-        }, 
-        child: const Text('Add to Order')
-        ),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                _bookingMessage = 'Added $_ticketQuantity tickets to the order';
+              });
+            },
+            child: const Text('Add to Order')),
       ],
     );
   }
