@@ -15,7 +15,7 @@ class SouthseaRepository {
       ),
       Movie(
         id: '2',
-        title: 'Wake up Dead Man: A Knives Out Mystery',
+        title: 'Wake Up Dead Man: A Knives Out Mystery',
         synopsis:
             'Detective Benoit Blanc heads to church to solve a perfectly impossible murder with help from a young priest.',
         ageRating: 'PG13',
