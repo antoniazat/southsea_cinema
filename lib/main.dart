@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
@@ -26,8 +27,10 @@ class SouthseaCinemaApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeView(),
-        '/listing': (context) =>
-            MovieListing(movie: null as dynamic), //check photo taken
+        '/listing': (context) {
+          final movie = ModalRoute.of(context)?.settings.arguments as Movie;
+          return MovieListing(movie: movie); //check photo taken
+        },
       },
     );
   }

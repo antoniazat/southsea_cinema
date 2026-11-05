@@ -71,7 +71,7 @@ class _BookingWidgetState extends State<BookingWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Tickets',
+        Text('Order ${widget.movie.title}',
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
         DropdownButton<int>(
           value: _ticketQuantity,
