@@ -19,34 +19,34 @@ class MovieListing extends StatelessWidget {
       ),
       drawer: const NavDrawer(),
       body: Container(
-          padding: EdgeInsets.all(10),
-          color: cinemaBackground,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Dracula (1931) (PG)',
-                style: TextStyle(fontSize: 25),
-              ),
-              const SizedBox(height: 20),
-              Text('Southsea Cinema Room', style: TextStyle(fontSize: 15)),
-              const SizedBox(height: 20),
-              Text('Thursday 22 October 2026, 18:00 - ends at 19:15',
-                  style: TextStyle(fontSize: 15)),
-              const SizedBox(height: 50),
-              Text(
-                'Please note that Discounts/Membership Benefits will be applied once you have your tickets',
-                style: TextStyle(fontSize: 15),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'Select Quantities (Up to 5 People in total)',
-                style: TextStyle(fontSize: 15),
-              ),
-              const SizedBox(height: 40),
-              BookingWidget(movie: movie),
-            ],
-          )),
+        color: cinemaBackground,
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Image.asset(
+              movie.posterImagePath,
+              height: 240,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 20),
+            Text(
+              '${movie.title} (${movie.ageRating})',
+              style: const TextStyle(fontSize: 25),
+            ),
+            const SizedBox(height: 12),
+            Text('${movie.duration}  |  ${movie.formattedPrice} per ticket'),
+            const SizedBox(height: 20),
+            Text(movie.synopsis),
+            const SizedBox(height: 32),
+            const Text(
+              'Select quantities (up to 5 people in total)',
+              style: TextStyle(fontSize: 15),
+            ),
+            const SizedBox(height: 16),
+            BookingWidget(movie: movie),
+          ],
+        ),
+      ),
     );
   }
 }
