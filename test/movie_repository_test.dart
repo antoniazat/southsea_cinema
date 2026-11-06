@@ -28,5 +28,20 @@ void main() {
       expect(wakeUpDeadManAKnivesOutMystery.pricing, 10.99);
       expect(wakeUpDeadManAKnivesOutMystery.posterImagePath, isNotEmpty);
     });
+    test('getMovieById returns matching movie when id exists', () {
+      final SouthseaRepository repository = SouthseaRepository();
+      final Movie? movie = repository.getMovieById('1');
+
+      expect(movie, isNotNull);
+      expect(movie?.title, 'Wildwood');
+      expect(movie?.pricing, 10.99);
+    });
+
+    test('getMovieById returns null when id does not exist', () {
+      final SouthseaRepository repository = SouthseaRepository();
+      final Movie? movie = repository.getMovieById('non-existent');
+
+      expect(movie, isNull);
+    });
   });
 }
