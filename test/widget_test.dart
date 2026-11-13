@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
-import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
@@ -55,8 +54,12 @@ void main() {
           findsOneWidget);
       expect(find.text('Add to Order'), findsOneWidget);
 
-      await tester.tap(find.text('Add to Order'));
+      final addButton = find.text('Add to Order');
+      await tester.ensureVisible(addButton);
       await tester.pumpAndSettle();
+      await tester.tap(addButton);
+      await tester.pumpAndSettle();
+
       expect(find.text('Added 1 tickets to the order'), findsOneWidget);
 
       // await tester.tap(find.text('Remove'));
