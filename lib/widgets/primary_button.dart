@@ -15,8 +15,8 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: cinemaBrand,
-        foregroundColor: cinemaSurface,
+        backgroundColor: cinemaSurface,
+        foregroundColor: cinemaFontWhite,
       ),
       onPressed: onPressed,
       child: Text(label),
