@@ -28,24 +28,24 @@ void main() {
     testWidgets('App displays HomeView as home', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
       expect(find.byType(HomeView), findsOneWidget);
-      expect(find.text('Southsea Cinema & Arts Centre'), findsOneWidget);
+      expect(find.byIcon(Icons.shopping_basket), findsOneWidget);
     });
 
-    testWidgets('Displays sandwich cards with names and prices',
+    testWidgets('Displays movie cards with names and prices',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
       expect(find.text('Wildwood'), findsOneWidget);
       expect(find.text('£10.99'), findsNWidgets(2));
       expect(
           find.text('Wake Up Dead Man: A Knives Out Mystery'), findsOneWidget);
-      expect(find.text('Select'), findsNWidgets(2));
+      expect(find.text('Add to Order'), findsNWidgets(2));
     });
 
-    testWidgets('Tapping Order navigates to OrderScreen with selected sandwich',
+    testWidgets('Tapping Order navigates to Movie Page with selected movie',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
-      await tester.tap(find.text('Select').first);
+      await tester.tap(find.text('Add to Order').first);
       await tester.pumpAndSettle();
 
       expect(find.byType(BookingWidget), findsOneWidget);
