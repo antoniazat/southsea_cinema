@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/southsea_repository.dart';
+import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 
@@ -18,6 +19,7 @@ class HomeView extends StatelessWidget {
           appTitle,
           style: cinemaHeaderStyle,
         ),
+        actions: const [BasketButton()],
         backgroundColor: cinemaSurface,
         iconTheme: const IconThemeData(color: cinemaBrand),
         elevation: 0,
@@ -27,7 +29,7 @@ class HomeView extends StatelessWidget {
         color: cinemaBackground,
         child: ListView.builder(
           itemCount: movies.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (BuildContext context, int index) {
             return MovieCard(movie: movies[index]);
           },
         ),
