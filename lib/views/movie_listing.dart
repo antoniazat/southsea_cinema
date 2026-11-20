@@ -23,11 +23,12 @@ class MovieListing extends StatelessWidget {
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: SingleChildScrollView(
-        child: Container(
-          color: cinemaBackground,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
+      body: Container(
+        color: cinemaBackground,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(
                 movie.posterImagePath,
