@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
+import 'package:southsea_cinema/repositories/cart_repository.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
@@ -43,6 +44,7 @@ void main() {
 
     testWidgets('Tapping Order navigates to Movie Page with selected movie',
         (WidgetTester tester) async {
+      CartRepository.instance.clear();
       await tester.pumpWidget(const SouthseaCinemaApp());
 
       await tester.tap(find.text('Add to Order').first);
@@ -52,19 +54,27 @@ void main() {
       expect(find.text('Wildwood (PG13)'), findsOneWidget);
       expect(find.text('Select quantities (up to 5 people in total)'),
           findsOneWidget);
-      expect(find.text('Add to Order'), findsOneWidget);
+      expect(find.text('Add to Basket'), findsOneWidget);
 
-      final addButton = find.text('Add to Order');
+      final quantityDropdown = find.byType(DropdownButton<int>);
+      await tester.ensureVisible(quantityDropdown);
+      await tester.pumpAndSettle();
+      await tester.tap(quantityDropdown);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('3 People'));
+      await tester.pumpAndSettle();
+
+      final addButton = find.text('Add to Basket');
       await tester.ensureVisible(addButton);
       await tester.pumpAndSettle();
       await tester.tap(addButton);
       await tester.pumpAndSettle();
 
-      expect(find.text('Added 1 tickets to the order'), findsOneWidget);
-
-      // await tester.tap(find.text('Remove'));
-      // await tester.pump();
-      // expect(find.text('0 Footlong Sub sandwich(es): '), findsOneWidget);
+      expect(find.text('Added 3 Wildwood to basket'), findsOneWidget);
+      final items = CartRepository.instance.getItems();
+      expect(items, hasLength(1));
+      expect(items.single.movie.title, 'Wildwood');
+      expect(items.single.ticketQuantity, 3);
     });
 
     //testWidgets('Movie ticket quantity does not exceed ticketQuantity',

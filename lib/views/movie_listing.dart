@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/cart_item.dart';
 import 'package:southsea_cinema/models/movie.dart';
+import 'package:southsea_cinema/repositories/cart_repository.dart';
+import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/widgets/primary_button.dart';
 
 class MovieListing extends StatelessWidget {
   final Movie movie;
@@ -13,38 +17,41 @@ class MovieListing extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle, style: cinemaHeaderStyle),
+        actions: const [BasketButton()],
         backgroundColor: cinemaSurface,
         iconTheme: const IconThemeData(color: cinemaBrand),
         elevation: 0,
       ),
       drawer: const NavDrawer(),
-      body: Container(
-        color: cinemaBackground,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
-            Image.asset(
-              movie.posterImagePath,
-              height: 240,
-              fit: BoxFit.contain,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              '${movie.title} (${movie.ageRating})',
-              style: const TextStyle(fontSize: 25),
-            ),
-            const SizedBox(height: 12),
-            Text('${movie.duration}  |  ${movie.formattedPrice} per ticket'),
-            const SizedBox(height: 20),
-            Text(movie.synopsis),
-            const SizedBox(height: 32),
-            const Text(
-              'Select quantities (up to 5 people in total)',
-              style: TextStyle(fontSize: 15),
-            ),
-            const SizedBox(height: 16),
-            BookingWidget(movie: movie),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          color: cinemaBackground,
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              Image.asset(
+                movie.posterImagePath,
+                height: 240,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                '${movie.title} (${movie.ageRating})',
+                style: const TextStyle(fontSize: 25),
+              ),
+              const SizedBox(height: 12),
+              Text('${movie.duration}  |  ${movie.formattedPrice} per ticket'),
+              const SizedBox(height: 20),
+              Text(movie.synopsis),
+              const SizedBox(height: 32),
+              const Text(
+                'Select quantities (up to 5 people in total)',
+                style: TextStyle(fontSize: 15),
+              ),
+              const SizedBox(height: 16),
+              BookingWidget(movie: movie),
+            ],
+          ),
         ),
       ),
     );
@@ -62,7 +69,25 @@ class BookingWidget extends StatefulWidget {
 
 class _BookingWidgetState extends State<BookingWidget> {
   int _ticketQuantity = 1;
-  String _bookingMessage = '';
+  String _confirmationMessage = '';
+
+  void _addToBasket() {
+    if (_ticketQuantity > 0) {
+      final CartItem item = CartItem(
+        movie: widget.movie,
+        ticketQuantity: _ticketQuantity,
+      );
+      CartRepository.instance.addItem(item);
+      setState(() {
+        _confirmationMessage =
+            'Added $_ticketQuantity ${widget.movie.title} to basket';
+      });
+    } else {
+      setState(() {
+        _confirmationMessage = 'Please select at least 1 movie';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,15 +113,19 @@ class _BookingWidgetState extends State<BookingWidget> {
             DropdownMenuItem(value: 5, child: Text('5 People')),
           ],
         ),
-        Text(_bookingMessage),
-        const SizedBox(height: 10),
-        ElevatedButton(
-            onPressed: () {
-              setState(() {
-                _bookingMessage = 'Added $_ticketQuantity tickets to the order';
-              });
-            },
-            child: const Text('Add to Order')),
+        const SizedBox(height: 24),
+        SizedBox(
+          width: double.infinity,
+          child: PrimaryButton(
+            label: 'Add to Basket',
+            onPressed: _addToBasket,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          _confirmationMessage,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
       ],
     );
   }
