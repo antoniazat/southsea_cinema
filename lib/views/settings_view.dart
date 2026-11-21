@@ -4,16 +4,16 @@ import 'package:southsea_cinema/models/user_settings.dart';
 import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class SettingsView extends StatefulWidget {
+  const SettingsView({super.key});
 
   @override
-  State<SettingsScreen> createState() {
-    return _SettingsScreenState();
+  State<SettingsView> createState() {
+    return _SettingsViewState();
   }
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsViewState extends State<SettingsView> {
   late TextEditingController _nameController;
   late TextEditingController _addressController;
   late TextEditingController _emailController;
