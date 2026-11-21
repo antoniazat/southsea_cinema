@@ -31,7 +31,7 @@ class SouthseaCinemaApp extends StatelessWidget {
           return const BasketView();
         },
         '/settings': (BuildContext context) {
-          return const SettingsScreen();
+          return const SettingsView();
         },
       },
     );
