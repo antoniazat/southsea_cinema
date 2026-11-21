@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
 import 'package:southsea_cinema/views/home_view.dart';
+import 'package:southsea_cinema/views/settings_view.dart';
 
 void main() {
   runApp(const SouthseaCinemaApp());
@@ -28,7 +29,10 @@ class SouthseaCinemaApp extends StatelessWidget {
         '/': (context) => const HomeView(),
         '/basket': (BuildContext context) {
           return const BasketView();
-        }
+        },
+        '/settings': (BuildContext context) {
+          return const SettingsScreen();
+        },
       },
     );
   }
