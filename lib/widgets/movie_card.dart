@@ -37,18 +37,20 @@ class MovieCard extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 18.0,
                           fontWeight: FontWeight.bold,
-                          color: cinemaBackground,
+                          color: cinemaFontWhite,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
                         movie.synopsis,
-                        style: const TextStyle(color: Colors.black54),
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
                         '${movie.ageRating}  |  ${movie.duration}',
-                        style: TextStyle(color: Color(0xFF242936)),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 255, 255, 255)),
                       ),
                     ],
                   ),
@@ -64,7 +66,7 @@ class MovieCard extends StatelessWidget {
                   style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF242936)),
+                      color: Color.fromARGB(255, 255, 255, 255)),
                 ),
                 PrimaryButton(
                   label: 'Add to Order',
