@@ -21,9 +21,6 @@ class HomeView extends StatelessWidget {
           style: cinemaHeaderStyle,
         ),
         actions: const [SettingsButton(), BasketButton()],
-        backgroundColor: cinemaSurface,
-        iconTheme: const IconThemeData(color: cinemaBrand),
-        elevation: 0,
       ),
       drawer: const NavDrawer(),
       body: Container(

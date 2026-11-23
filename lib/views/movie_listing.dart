@@ -18,9 +18,6 @@ class MovieListing extends StatelessWidget {
       appBar: AppBar(
         title: const Text(appTitle, style: cinemaHeaderStyle),
         actions: const [BasketButton()],
-        backgroundColor: cinemaSurface,
-        iconTheme: const IconThemeData(color: cinemaBrand),
-        elevation: 0,
       ),
       drawer: const NavDrawer(),
       body: Container(
