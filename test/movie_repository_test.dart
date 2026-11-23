@@ -3,6 +3,7 @@ import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/repositories/southsea_repository.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   group('SouthseaRepository unit tests', () {
     test('getMovies returns two movies', () {
       final SouthseaRepository repository = SouthseaRepository();
@@ -42,6 +43,16 @@ void main() {
       final Movie? movie = repository.getMovieById('non-existent');
 
       expect(movie, isNull);
+    });
+
+    test('loadMoviesFromAsset reads the bundled JSON menu', () async {
+      final SouthseaRepository repository = SouthseaRepository();
+      final List<Movie> movies = await repository.loadMoviesFromAsset();
+
+      expect(movies.length, 2);
+      expect(movies[0].id, '1');
+      expect(movies[1].id, '2');
+      expect(repository.getMovies(), movies);
     });
   });
 }
