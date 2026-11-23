@@ -78,7 +78,7 @@ class _BookingWidgetState extends State<BookingWidget> {
       CartRepository.instance.addItem(item);
       setState(() {
         _confirmationMessage =
-            'Added $_ticketQuantity ${widget.movie.title} to basket';
+            'Added $_ticketQuantity ${widget.movie.title} ticket(s) to basket';
       });
     } else {
       setState(() {
