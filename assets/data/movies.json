@@ -32,7 +32,7 @@
     "synopsis": "This movie is not on our real listing and its image is missing.",
     "ageRating": "No Age Rating",
     "duration": "No run time",
-    "pricing": "free",
+    "pricing": 0.00,
     "posterImagePath": "assets/images/nonexistent.jpeg"
   }
 ]
