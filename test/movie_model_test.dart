@@ -41,5 +41,40 @@ void main() {
 
       expect(movie.formattedPrice, '£10.99');
     });
+
+    test('JSON conversion preserves every movie field', () {
+      final Map<String, dynamic> data = <String, dynamic>{
+        'id': '3',
+        'title': 'Kubo and the Two Strings',
+        'synopsis': 'Banishing an evil spirit with courage.',
+        'ageRating': 'PG13',
+        'duration': '1h 42m',
+        'pricing': 7.99,
+        'posterImagePath': '/assets/images/wildwood.jpg',
+      };
+      final Movie movie = Movie.fromJSON(data);
+      expect(movie.id, '3');
+      expect(movie.title, 'Kubo and the Two Strings');
+      expect(movie.synopsis, 'Banishing an evil spirit with courage.');
+      expect(movie.ageRating, 'PG13');
+      expect(movie.duration, '1h 42m');
+      expect(movie.pricing, 7.99);
+      expect(movie.posterImagePath, '/assets/images/wildwood.jpg');
+    });
+
+    test('fromJson accepts a whole-number price', () {
+      final Map<String, dynamic> data = <String, dynamic>{
+        'id': '4',
+        'title': 'ParaNorman',
+        'synopsis': 'Something about a kid idk',
+        'ageRating': 'PG13',
+        'duration': '1h 50m',
+        'pricing': 8,
+        'posterImagePath': '/assets/images/wildwood.jpg',
+      };
+      final Movie movie = Movie.fromJSON(data);
+      expect(movie.pricing, 8.0);
+      expect(movie.pricing, isA<double>());
+    });
   });
 }
