@@ -18,4 +18,25 @@ class Movie {
   });
 
   String get formattedPrice => '£${pricing.toStringAsFixed(2)}';
+
+  factory Movie.fromJSON(Map<String, dynamic> json) {
+    final String id = json['id'] as String;
+    final String title = json['title'] as String;
+    final String synopsis = json['synopsis'] as String;
+    final String duration = json['duration'] as String;
+    final String ageRating = json['ageRating'] as String;
+    final num priceNumber = json['pricing'] as num;
+    final double pricing = priceNumber.toDouble();
+    final String posterImagePath = json['posterImagePath'] as String;
+
+    return Movie(
+      id: id,
+      title: title,
+      synopsis: synopsis,
+      duration: duration,
+      pricing: pricing,
+      ageRating: ageRating,
+      posterImagePath: posterImagePath,
+    );
+  }
 }
