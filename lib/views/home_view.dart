@@ -49,26 +49,28 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Movie> movies = SouthseaRepository().getMovies();
-
+    final Widget body;
+    if (_loading) {
+      body = const Center(child: CircularProgressIndicator());
+    } else if (_errorMessage.isNotEmpty) {
+      body = Center(child: Text(_errorMessage));
+    } else {
+      body = ListView.builder(
+        itemCount: _movies.length,
+        itemBuilder: (BuildContext context, int index) {
+          return MovieCard(movie: _movies[index]);
+        },
+      );
+    }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          appTitle,
-          style: cinemaHeaderStyle,
+        appBar: AppBar(
+          title: const Text(
+            appTitle,
+            style: cinemaHeaderStyle,
+          ),
+          actions: const [SettingsButton(), BasketButton()],
         ),
-        actions: const [SettingsButton(), BasketButton()],
-      ),
-      drawer: const NavDrawer(),
-      body: Container(
-        color: cinemaBackground,
-        child: ListView.builder(
-          itemCount: movies.length,
-          itemBuilder: (BuildContext context, int index) {
-            return MovieCard(movie: movies[index]);
-          },
-        ),
-      ),
-    );
+        drawer: const NavDrawer(),
+        body: body);
   }
 }
