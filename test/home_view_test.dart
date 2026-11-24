@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/settings_view.dart';
@@ -9,6 +11,8 @@ import 'package:southsea_cinema/widgets/movie_card.dart';
 void main() {
   setUp(() {
     rootBundle.clear();
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
   });
   testWidgets('HomeView shows the movie list, settings and basket buttons', (
     WidgetTester tester,
