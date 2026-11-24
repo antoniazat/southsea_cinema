@@ -3,6 +3,12 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/user_settings.dart';
 import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+const String prefName = 'user_name';
+const String prefAddress = 'user_address';
+const String prefEmail = 'user_email';
+const String prefNewsletter = 'user_newsletter';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -26,6 +32,7 @@ class _SettingsViewState extends State<SettingsView> {
     _nameController = TextEditingController();
     _addressController = TextEditingController();
     _emailController = TextEditingController();
+    _loadSettings();
   }
 
   @override
@@ -34,6 +41,44 @@ class _SettingsViewState extends State<SettingsView> {
     _addressController.dispose();
     _emailController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadSettings() async {
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    final String? savedName = await prefs.getString(prefName);
+    final String? savedAddress = await prefs.getString(prefAddress);
+    final String? savedEmail = await prefs.getString(prefEmail);
+    final bool? savedNewsletter = await prefs.getBool(prefNewsletter);
+
+    String name = '';
+    if (savedName != null) {
+      name = savedName;
+    }
+
+    String address = '';
+    if (savedAddress != null) {
+      address = savedAddress;
+    }
+
+    String email = '';
+    if (savedEmail != null) {
+      email = savedEmail;
+    }
+
+    bool newsletter = false;
+    if (savedNewsletter != null) {
+      newsletter = savedNewsletter;
+    }
+
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _nameController.text = name;
+      _addressController.text = address;
+      _emailController.text = email;
+      _receiveNewsletter = newsletter;
+    });
   }
 
   void _saveSettings() {
