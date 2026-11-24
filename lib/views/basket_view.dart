@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/database/movie_db.dart';
 import 'package:southsea_cinema/models/cart_item.dart';
+import 'package:southsea_cinema/models/order_record.dart';
 import 'package:southsea_cinema/repositories/cart_repository.dart';
 import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/bookings_button.dart';
@@ -16,6 +18,22 @@ class BasketView extends StatefulWidget {
 class _BasketViewState extends State<BasketView> {
   String _confirmationMessage = '';
 
+  String _buildSummary(List<CartItem> items) {
+    final List<String> parts = [];
+    for (final CartItem item in items) {
+      parts.add('${item.ticketQuantity} x ${item.movie.title}');
+    }
+    return parts.join(', ');
+  }
+
+  String _formatDate(DateTime now) {
+    final String day = now.day.toString().padLeft(2, '0');
+    final String month = now.month.toString().padLeft(2, '0');
+    final String hour = now.hour.toString().padLeft(2, '0');
+    final String minute = now.minute.toString().padLeft(2, '0');
+    return '$day/$month/${now.year} $hour:$minute';
+  }
+
   Widget _buildEmptyState() {
     return const Center(
         child: Padding(
@@ -25,6 +43,40 @@ class _BasketViewState extends State<BasketView> {
         style: TextStyle(fontSize: 16, color: Colors.grey),
       ),
     ));
+  }
+
+  Future<void> _checkout(CartRepository cart, List<CartItem> items) async {
+    final String summary = _buildSummary(items);
+    final double total = cart.getTotalDue();
+    final String date = _formatDate(DateTime.now());
+
+    try {
+      final MovieDatabase database = MovieDatabase.instance;
+      final int orderNumber = await database.getNextOrderNumber();
+      final OrderRecord record = OrderRecord(
+        orderNumber: orderNumber,
+        summary: summary,
+        total: total,
+        date: date,
+      );
+
+      await database.insertOrder(record);
+      cart.clear();
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = 'Order $orderNumber saved';
+      });
+      Navigator.pushNamed(context, '/orders');
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        _confirmationMessage = 'Could not save your order: $error';
+      });
+    }
   }
 
   Widget _buildLineItem(CartRepository cart, CartItem item, int index) {
@@ -113,13 +165,11 @@ class _BasketViewState extends State<BasketView> {
     children.add(SizedBox(
       width: double.infinity,
       child: PrimaryButton(
-          label: 'Checkout',
-          onPressed: () {
-            setState(() {
-              cart.clear();
-              _confirmationMessage = 'Thanks, your order is on its way';
-            });
-          }),
+        label: 'Checkout',
+        onPressed: () {
+          _checkout(cart, items);
+        },
+      ),
     ));
 
     if (_confirmationMessage.isNotEmpty) {
