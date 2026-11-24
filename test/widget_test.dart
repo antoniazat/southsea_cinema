@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/repositories/cart_repository.dart';
@@ -6,6 +7,9 @@ import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
 
 void main() {
+  setUp(() {
+    rootBundle.clear();
+  });
   group('DropdownMenuItem widget tests', () {
     testWidgets('DropdownMenuItem displays the correct text and value',
         (WidgetTester tester) async {
@@ -28,6 +32,7 @@ void main() {
   group('App smoke test', () {
     testWidgets('App displays HomeView as home', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
       expect(find.byType(HomeView), findsOneWidget);
       expect(find.byIcon(Icons.shopping_basket), findsOneWidget);
     });
@@ -35,17 +40,28 @@ void main() {
     testWidgets('Displays movie cards with names and prices',
         (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
       expect(find.text('Wildwood'), findsOneWidget);
-      expect(find.text('£10.99'), findsNWidgets(2));
+      expect(find.text('£10.99'), findsWidgets);
       expect(
           find.text('Wake Up Dead Man: A Knives Out Mystery'), findsOneWidget);
-      expect(find.text('Add to Order'), findsNWidgets(2));
+      expect(find.text('Add to Order'), findsWidgets);
+
+      await tester.scrollUntilVisible(
+          find.text('Kubo and the Two Strings'), 150);
+      expect(find.text('£8.99'), findsOneWidget);
+      await tester.scrollUntilVisible(find.text('Nonexistent Movie'), 150);
+      await tester.pumpAndSettle();
+      expect(find.text('£0.00'), findsOneWidget);
+      expect(find.text('Image unavailable'), findsOneWidget);
+      expect(tester.takeException(), isNull);
     });
 
     testWidgets('Tapping Order navigates to Movie Page with selected movie',
         (WidgetTester tester) async {
       CartRepository.instance.clear();
       await tester.pumpWidget(const SouthseaCinemaApp());
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Add to Order').first);
       await tester.pumpAndSettle();
@@ -70,7 +86,7 @@ void main() {
       await tester.tap(addButton);
       await tester.pumpAndSettle();
 
-      expect(find.text('Added 3 Wildwood to basket'), findsOneWidget);
+      expect(find.text('Added 3 Wildwood ticket(s) to basket'), findsOneWidget);
       final items = CartRepository.instance.getItems();
       expect(items, hasLength(1));
       expect(items.single.movie.title, 'Wildwood');
