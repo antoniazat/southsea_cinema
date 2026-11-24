@@ -1,0 +1,70 @@
+import 'package:path/path.dart';
+import 'package:southsea_cinema/models/order_record.dart';
+import 'package:sqflite/sqflite.dart';
+
+class MovieDatabase {
+  MovieDatabase._internal();
+
+  static final MovieDatabase instance = MovieDatabase._internal();
+
+  static Database? _database;
+
+  void setDatabase(Database? db) {
+    _database = db;
+  }
+
+  Future<Database> get database async {
+    final Database? cachedDatabase = _database;
+    if (cachedDatabase != null) {
+      return cachedDatabase;
+    }
+    final Database db = await _initDB('movie_data.db');
+    _database = db;
+    return db;
+  }
+
+  Future<Database> _initDB(String fileName) async {
+    final String folder = await getDatabasesPath();
+    final String filePath = join(folder, fileName);
+    final Database db = await openDatabase(
+      filePath,
+      version: 1,
+      onCreate: _createDB,
+    );
+    return db;
+  }
+
+  Future<void> createTables(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS orders (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        order_number INTEGER NOT NULL,
+        summary TEXT NOT NULL,
+        total REAL NOT NULL,
+        date TEXT NOT NULL
+      )
+    ''');
+  }
+
+  Future<void> _createDB(Database db, int version) async {
+    await createTables(db, version);
+    await db.insert('orders', <String, Object?>{
+      'order_number': 1003,
+      'summary': '2 x Wildwood ticket(s)',
+      'total': 21.98,
+      'date': '18/04/2026 12:45',
+    });
+    await db.insert('orders', <String, Object?>{
+      'order_number': 1002,
+      'summary': '1 x Kubo and the Two Strings ticket(s)',
+      'total': 8.99,
+      'date': '02/03/2026 18:10',
+    });
+    await db.insert('orders', <String, Object?>{
+      'order_number': 1001,
+      'summary': '3 x Wake Up Dead Man: A Knives Out Mystery ticket(s)',
+      'total': 32.97,
+      'date': '11/01/2026 13:02',
+    });
+  }
+}
