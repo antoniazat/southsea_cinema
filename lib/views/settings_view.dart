@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/user_settings.dart';
 import 'package:southsea_cinema/widgets/basket_button.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const String prefName = 'user_name';
 const String prefAddress = 'user_address';
@@ -81,10 +81,16 @@ class _SettingsViewState extends State<SettingsView> {
     });
   }
 
-  void _saveSettings() {
+  Future<void> _saveSettings() async {
     final String name = _nameController.text.trim();
     final String address = _addressController.text.trim();
     final String email = _emailController.text.trim();
+
+    final SharedPreferencesAsync prefs = SharedPreferencesAsync();
+    await prefs.setString(prefName, name);
+    await prefs.setString(prefAddress, address);
+    await prefs.setString(prefEmail, email);
+    await prefs.setBool(prefNewsletter, _receiveNewsletter);
 
     final UserSettings settings = UserSettings(
       name: name,
@@ -92,6 +98,10 @@ class _SettingsViewState extends State<SettingsView> {
       email: email,
       receiveNewsletter: _receiveNewsletter,
     );
+
+    if (!mounted) {
+      return;
+    }
 
     setState(() {
       _confirmationMessage = 'Settings saved for ${settings.name}';
