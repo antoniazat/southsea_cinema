@@ -9,7 +9,7 @@ class BookingsView extends StatefulWidget {
 
   @override
   State<BookingsView> createState() {
-    return BookingsViewState();
+    return _BookingsViewState();
   }
 }
 
@@ -20,7 +20,37 @@ class _BookingsViewState extends State<BookingsView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final Widget body;
+    if (_loading) {
+      body = const Center(child: CircularProgressIndicator());
+    } else if (_errorMessage.isNotEmpty) {
+      body = Center(child: Text(_errorMessage));
+    } else if (_orders.isEmpty) {
+      body = const Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 32.0),
+          child: Text(
+            'No orders yet',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+        ),
+      );
+    } else {
+      body = ListView.builder(
+        itemCount: _orders.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildOrderCard(_orders[index]);
+        },
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(appTitle, style: cinemaHeaderStyle),
+        actions: const [BasketButton()],
+      ),
+      body: body,
+    );
   }
 
   @override
