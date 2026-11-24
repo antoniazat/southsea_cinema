@@ -67,4 +67,24 @@ class MovieDatabase {
       'date': '11/01/2026 13:02',
     });
   }
+
+  Future<int> insertOrder(OrderRecord order) async {
+    final Database db = await database;
+    final int id = await db.insert('orders', order.toMap());
+    return id;
+  }
+
+  Future<List<OrderRecord>> getAllOrders() async {
+    final Database db = await database;
+    final List<Map<String, Object?>> records = await db.query(
+      'orders',
+      orderBy: 'order_number DESC',
+    );
+
+    final List<OrderRecord> orders = [];
+    for (final Map<String, Object?> row in records) {
+      orders.add(OrderRecord.fromMap(row));
+    }
+    return orders;
+  }
 }
