@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/views/basket_view.dart';
+import 'package:southsea_cinema/views/bookings_view.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/settings_view.dart';
 
@@ -70,6 +71,9 @@ class SouthseaCinemaApp extends StatelessWidget {
         },
         '/settings': (BuildContext context) {
           return const SettingsView();
+        },
+        '/orders': (BuildContext context) {
+          return const BookingsView();
         },
       },
     );
