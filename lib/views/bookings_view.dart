@@ -3,6 +3,7 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/database/movie_db.dart';
 import 'package:southsea_cinema/models/order_record.dart';
 import 'package:southsea_cinema/widgets/basket_button.dart';
+import 'package:southsea_cinema/widgets/bookings_button.dart';
 
 class BookingsView extends StatefulWidget {
   const BookingsView({super.key});
@@ -47,7 +48,7 @@ class _BookingsViewState extends State<BookingsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle, style: cinemaHeaderStyle),
-        actions: const [BasketButton()],
+        actions: const [BookingsButton(), BasketButton()],
       ),
       body: body,
     );
