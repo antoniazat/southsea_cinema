@@ -5,6 +5,7 @@ import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/repositories/cart_repository.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
   setUp(() {
@@ -87,5 +88,29 @@ void main() {
       expect(items.single.movie.title, 'Wildwood');
       expect(items.single.ticketQuantity, 3);
     });
+  });
+
+  test('Android is supported', () {
+    debugDefaultTargetPlatformOverride = TargetPlatform.android;
+    expect(isSupportedPlatform(), isTrue);
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  test('Other platforms are not supported', () {
+    debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    expect(isSupportedPlatform(), isFalse);
+    debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
+    expect(isSupportedPlatform(), isFalse);
+    debugDefaultTargetPlatformOverride = TargetPlatform.windows;
+    expect(isSupportedPlatform(), isFalse);
+    debugDefaultTargetPlatformOverride = TargetPlatform.linux;
+    expect(isSupportedPlatform(), isFalse);
+    debugDefaultTargetPlatformOverride = null;
+  });
+
+  testWidgets('The unsupported platform screen explains what to do',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const UnsupportedPlatformApp());
+    expect(find.textContaining('Android emulator'), findsOneWidget);
   });
 }
