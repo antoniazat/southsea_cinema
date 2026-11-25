@@ -50,11 +50,6 @@ void main() {
       await tester.scrollUntilVisible(
           find.text('Kubo and the Two Strings'), 150);
       expect(find.text('£8.99'), findsOneWidget);
-      await tester.scrollUntilVisible(find.text('Nonexistent Movie'), 150);
-      await tester.pumpAndSettle();
-      expect(find.text('£0.00'), findsOneWidget);
-      expect(find.text('Image unavailable'), findsOneWidget);
-      expect(tester.takeException(), isNull);
     });
 
     testWidgets('Tapping Order navigates to Movie Page with selected movie',

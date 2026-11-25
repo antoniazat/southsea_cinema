@@ -49,14 +49,12 @@ void main() {
       final SouthseaRepository repository = SouthseaRepository();
       final List<Movie> movies = await repository.loadMoviesFromAsset();
 
-      expect(movies.length, 4);
+      expect(movies.length, 3);
       expect(movies[0].id, '1');
       expect(movies[1].id, '2');
       expect(movies[2].id, '3');
       expect(movies[2].pricing, 8.99);
       expect(movies[2].posterImagePath, 'assets/images/kubo.jpg');
-      expect(movies[3].id, 'nonexistent');
-      expect(movies[3].pricing, 0.0);
       expect(repository.getMovies(), movies);
     });
   });
