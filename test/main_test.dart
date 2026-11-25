@@ -87,33 +87,5 @@ void main() {
       expect(items.single.movie.title, 'Wildwood');
       expect(items.single.ticketQuantity, 3);
     });
-
-    //testWidgets('Movie ticket quantity does not exceed ticketQuantity',
-    //  (WidgetTester tester) async {
-    //const movie = Movie(
-    // id: 'test',
-    //ageRating: 'PG13',
-    // duration: '2h 26m',
-    //  title: 'Test Movie',
-    // synopsis: 'Test description',
-    // pricing: 5.0,
-    // posterImagePath: 'assets/images/footlong.jpeg',
-    //);
-
-    // await tester
-    //    .pumpWidget(const MaterialApp(home: BookingWidget(movie: movie)));
-
-    //await tester.tap(find.byType(DropdownButton<int>));
-    //await tester.pumpAndSettle();
-
-    // expect(find.text('6 People'), findsNothing);
-
-    // await tester.tap(find.text('5 People'));
-    // await tester.pumpAndSettle();
-    // await tester.tap(find.text('Add to order'));
-    // await tester.pumpAndSettle();
-
-    //expect(find.text('Added 5 tickets to the order'), findsOneWidget);
-    //});
   });
 }

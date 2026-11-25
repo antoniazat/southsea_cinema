@@ -4,7 +4,7 @@ import 'package:southsea_cinema/models/movie.dart';
 void main() {
   group('Movie model tests', () {
     test('creates Movie instance with given properties', () {
-      const movie = Movie(
+      const Movie movie = Movie(
         id: '1',
         title: 'Wildwood',
         synopsis:
@@ -28,7 +28,7 @@ void main() {
     test(
         'formattedPrice returns price prefixed with pound sign and two decimals',
         () {
-      const movie = Movie(
+      const Movie movie = Movie(
         id: '1',
         title: 'Wildwood',
         synopsis:
