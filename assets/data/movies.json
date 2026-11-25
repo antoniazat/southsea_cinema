@@ -25,14 +25,5 @@
     "duration": "1h 42m",
     "pricing": 8.99,
     "posterImagePath": "assets/images/kubo.jpg"
-  },
-  {
-    "id": "nonexistent",
-    "title": "Nonexistent Movie",
-    "synopsis": "This movie is not on our real listing and its image is missing.",
-    "ageRating": "No Age Rating",
-    "duration": "No run time",
-    "pricing": 0.00,
-    "posterImagePath": "assets/images/nonexistent.jpeg"
   }
 ]
