@@ -22,10 +22,10 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    _loadSandwiches();
+    _loadMovies();
   }
 
-  Future<void> _loadSandwiches() async {
+  Future<void> _loadMovies() async {
     try {
       final SouthseaRepository repository = SouthseaRepository();
       final List<Movie> movies = await repository.loadMoviesFromAsset();
