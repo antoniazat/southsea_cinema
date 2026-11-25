@@ -21,7 +21,7 @@ class OrderRecord {
       'date': date,
     };
 
-     if (id != null) {
+    if (id != null) {
       data['id'] = id;
     }
     return data;
